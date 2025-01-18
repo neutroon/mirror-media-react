@@ -11,7 +11,7 @@ const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
         onMouseEnter={() => (inSlider ? "" : setIsActive(true))}
         onMouseLeave={() => (inSlider ? "" : setIsActive(false))}
         className={`${styles.serviceCard} ${
-          isActive || inSlider ? "h-[26rem] pt-56" : "h-64"
+          isActive || inSlider ? "h-[30rem] pt-[17rem]" : "h-64"
         } text-center card card-side flex-col bg-base-100 shadow-xl overflow-hidden `}
       >
         <figure
@@ -26,7 +26,9 @@ const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
           />
         </figure>
         <div className="card-body px-2 ">
-          <h2 className="card-title mx-auto">SOCIAL MEDIA MANAGEMENT</h2>
+          <h2 className="card-title mx-auto font-bold">
+            SOCIAL MEDIA MANAGEMENT
+          </h2>
           <p className="text-gray-500">
             create and manage strategies that connect your brand with the right
             audience.
