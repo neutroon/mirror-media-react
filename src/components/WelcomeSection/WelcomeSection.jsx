@@ -1,3 +1,5 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const WelcomeSection = () => {
   return (
     <>
@@ -8,9 +10,15 @@ const WelcomeSection = () => {
         <span className="font-bold">Our 10 years working experience to </span>
         take care of your business goal.
       </h6>
-      <img
+      {/* <img
         className="w-full object-cover rounded-2xl mt-5"
         src="/public/welcomeImg.jpg"
+        alt="welcome image"
+      /> */}
+      <LazyLoadImage
+        className="w-full object-cover rounded-2xl mt-5"
+        src="/public/welcomeImg.jpg"
+        effect="blur"
         alt="welcome image"
       />
 
