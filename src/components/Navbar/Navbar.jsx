@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 // import style from "./Navbar.module.css";
 import "../../App.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+  useEffect(() => {
+    setIsClosed(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
   const [isClosed, setIsClosed] = useState(true);
   const toggleNavbar = () => setIsClosed(!isClosed);
   useEffect(() => {
@@ -60,14 +65,14 @@ const Navbar = () => {
               Services
             </NavLink>
           </li>
-          <li className="hover:text-primary transition-colors duration-500 cursor-pointer">
+          {/* <li className="hover:text-primary transition-colors duration-500 cursor-pointer">
             <NavLink
               to="/blog"
               className={({ isActive }) => (isActive ? "text-primary" : "")}
             >
               Blog
             </NavLink>
-          </li>
+          </li> */}
           <li className="hover:text-primary transition-colors duration-500 cursor-pointer">
             <NavLink
               to="/contact"
@@ -86,7 +91,9 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="flex gap-5 items-center">
-          <button className="main-btn">Start Today!</button>
+          <NavLink to="/contact">
+            <button className="main-btn">Start Today!</button>
+          </NavLink>
           <div
             onClick={toggleNavbar}
             className="md:hidden flex w-8 flex-col gap-1 cursor-pointer"
