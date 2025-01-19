@@ -1,6 +1,8 @@
 // import React from "react";
 import { useState } from "react";
 import styles from "./ServiceCard.module.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
   const [isActive, setIsActive] = useState(false);
@@ -19,10 +21,16 @@ const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
             isActive || inSlider ? "h-60" : ""
           } w-full h-72 rounded-none`}
         >
-          <img
+          {/* <img
             className={`h-full rounded-none w-full object-cover absolute `}
             src="/service images/SOCIAL MEDIA MANAGEMENT.jpg"
             alt="Movie"
+          /> */}
+          <LazyLoadImage
+            className="h-full rounded-none w-full object-cover absolute "
+            src="/service images/SOCIAL MEDIA MANAGEMENT.jpg"
+            alt="service image"
+            effect="blur"
           />
         </figure>
         <div className="card-body px-2 ">
