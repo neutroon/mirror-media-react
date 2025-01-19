@@ -11,8 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 const Contact = () => {
   return (
-    <div className="container py-10">
-      <PageTitle title="Contact Us" />
+    <div className="container py-10 ">
+      <div className="text-[3rem]">
+        <PageTitle title="Contact Us" />
+      </div>
       <div className="grid pt-28 grid-cols-1 md:grid-cols-3 gap-4">
         <div className="flex items-center gap-1 w-full">
           <div className="hover:text-primary-800 text-white border-2 hover:border-primary hover:bg-white min-w-16 h-16 rounded-full flex items-center justify-center font-bold transition-all duration-500 text-[2rem] bg-black">
