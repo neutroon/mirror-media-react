@@ -6,7 +6,9 @@ import ServiceCard from "../components/ServiceCard/ServiceCard";
 const Services = () => {
   return (
     <>
-      <PageTitle title="Services" />
+      <div className="text-[3rem]">
+        <PageTitle title="Services" />
+      </div>
       <div className="container  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <div className="my-10">
           <ServiceCard cardDirection="right" />
