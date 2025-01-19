@@ -1,5 +1,6 @@
 // import React from "react";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const HeroSection = () => {
   const imgs = [
     {
@@ -12,11 +13,16 @@ const HeroSection = () => {
 
   return (
     <>
-      <div className="carousel max-h-screen rounded-b-box">
+      <div className="carousel  rounded-b-box">
         {imgs.map((img, index) => {
           return (
             <div className="carousel-item w-full" key={index}>
-              <img className="object-cover w-full" src={img.src} alt="Pizza" />
+              <LazyLoadImage
+                className="object-cover w-screen h-screen"
+                src={img.src}
+                effect="blur"
+              />
+              {/* <img className="object-cover w-full" src={img.src} /> */}
             </div>
           );
         })}
