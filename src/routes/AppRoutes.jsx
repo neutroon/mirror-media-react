@@ -2,7 +2,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageTransition from "./PageTransition";
-import PartnerDetails from "../pages/PartnerDetails";
 
 // function delayImport(importPromise, delayTime = 1000000) {
 //   return new Promise((resolve) => {
@@ -30,6 +29,7 @@ const OurPartners = lazy(() => import("../pages/OurPartners"));
 // import Blog from "../pages/Blog";
 const Blog = lazy(() => import("../pages/Blog"));
 // const Blog = lazy(() => delayImport(import("../pages/Blog")));
+const ItemDetails = lazy(() => import("../pages/ItemDetails"));
 const AppRoutes = () => {
   const location = useLocation();
   return (
@@ -45,10 +45,11 @@ const AppRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/services" element={<Services />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/partners" element={<OurPartners />} />
-          <Route path="/partners/:Id" element={<PartnerDetails />} />
+          <Route path="/partners/:Id" element={<ItemDetails />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/:Id" element={<ItemDetails />} />
         </Routes>
       </PageTransition>
     </Suspense>
