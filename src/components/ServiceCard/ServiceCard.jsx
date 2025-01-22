@@ -3,8 +3,14 @@ import { useState } from "react";
 import styles from "./ServiceCard.module.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { NavLink } from "react-router-dom";
 
-const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
+const ServiceCard = ({
+  inSlider = false,
+  title = "Service name",
+  description = "",
+  image = "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
+}) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -28,23 +34,29 @@ const ServiceCard = ({ cardDirection = "right", inSlider = false }) => {
           /> */}
           <LazyLoadImage
             className="h-full rounded-none w-full object-cover absolute "
-            src="/service images/SOCIAL MEDIA MANAGEMENT.jpg"
+            src={image}
             alt="service image"
             effect="blur"
           />
         </figure>
         <div className="card-body px-2 ">
           <h2 className="card-title mx-auto font-bold">
-            SOCIAL MEDIA MANAGEMENT
+            {title.toUpperCase()}
           </h2>
           <p className="text-gray-500">
-            create and manage strategies that connect your brand with the right
-            audience.
+            {description.length > 100
+              ? description.substring(0, 100) + "..."
+              : description}
           </p>
           <div className={`card-actions `}>
-            <button className="btn main-btn tracking-widest mx-auto">
-              Start!
-            </button>
+            <NavLink
+              to={`/services/${title.toLowerCase()}`}
+              className={"mx-auto"}
+            >
+              <button className="btn main-btn tracking-widest font-bold">
+                Learn More!
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>
