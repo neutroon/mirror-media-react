@@ -5,44 +5,55 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPartners } from "../redux/dataSlice";
 const OurPartners = () => {
-  const getPartners = async () => {
-    const res = await fetch(
-      "https://jjgoegozmvelpbpghdri.supabase.co/rest/v1/partners?select=category_id,name,logo,description,categories(name)",
-
-      {
-        method: "GET",
-        headers: {
-          apikey:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqZ29lZ296bXZlbHBicGdoZHJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczNjgyMDQsImV4cCI6MjA1Mjk0NDIwNH0.5IcSdFy13gInIB3NyL7S0O5TezDe_dW654fzVQlE03g",
-        },
-      }
-    );
-    const partners = await res.json();
-    return partners;
-  };
-  const [partnersData, setPartnersData] = useState([]);
+  const dispatch = useDispatch();
+  const { partners, status, error } = useSelector((state) => state.data);
   useEffect(() => {
-    getPartners().then((partners) => {
-      const groubedPartners = partners.reduce((acc, partner) => {
-        if (!acc.find((cat) => cat.categoryName === partner.categories.name)) {
-          acc.push({
-            categoryName: partner.categories.name,
-            partners: [partner],
-          });
-        } else {
-          const cat = acc.find(
-            (cat) => cat.categoryName === partner.categories.name
-          );
-          cat.partners.push(partner);
-        }
-        return acc;
-      }, []);
-      console.log("groubedPartners", groubedPartners);
+    if (status === "idle") {
+      dispatch(fetchPartners());
+    }
+  }, [status, dispatch]);
+  // const getPartners = async () => {
+  //   const res = await fetch(
+  //     "https://jjgoegozmvelpbpghdri.supabase.co/rest/v1/partners?select=category_id,name,logo,description,categories(name)",
 
-      setPartnersData(groubedPartners);
-    });
-  }, []);
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         apikey:
+  //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqZ29lZ296bXZlbHBicGdoZHJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczNjgyMDQsImV4cCI6MjA1Mjk0NDIwNH0.5IcSdFy13gInIB3NyL7S0O5TezDe_dW654fzVQlE03g",
+  //       },
+  //     }
+  //   );
+  //   const partners = await res.json();
+  //   return partners;
+  // };
+
+  // const [partnersData, setPartnersData] = useState([]);
+
+  // useEffect(() => {
+  //   // getPartners().then((partners) => {
+  //   //   const groubedPartners = partners.reduce((acc, partner) => {
+  //   //     if (!acc.find((cat) => cat.categoryName === partner.categories.name)) {
+  //   //       acc.push({
+  //   //         categoryName: partner.categories.name,
+  //   //         partners: [partner],
+  //   //       });
+  //   //     } else {
+  //   //       const cat = acc.find(
+  //   //         (cat) => cat.categoryName === partner.categories.name
+  //   //       );
+  //   //       cat.partners.push(partner);
+  //   //     }
+  //   //     return acc;
+  //   //   }, []);
+  //   //   console.log("groubedPartners", groubedPartners);
+
+  //   //   setPartnersData(groubedPartners);
+  //   });
+  // }, []);
   return (
     <>
       <div className="relative">
@@ -57,7 +68,7 @@ const OurPartners = () => {
         />
       </div>
       <div className="partners py-32 overflow-hiddens container">
-        {partnersData.map((partner, index) => {
+        {partners.map((partner, index) => {
           return (
             <div key={index} className="category">
               <h3 className="text-[48px] mt-10 underline underline-offset-8 decoration-2 border-primary font-bold text-primary">
@@ -68,7 +79,7 @@ const OurPartners = () => {
                   return (
                     <div
                       key={partnerIndex}
-                      className="partner overflow-hidden border-primary border-2 rounded-md relative"
+                      className="partner flex items-center content-center overflow-hidden border-primary border-2 rounded-md relative"
                     >
                       <div className="absolute top-0 start-0 end-0 bottom-0 z-10 opacity-0 hover:opacity-100 transition-all duration-500 bg-primary-400">
                         <NavLink to={`/partners/${partner.name}`}>

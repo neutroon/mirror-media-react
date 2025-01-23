@@ -9,7 +9,11 @@ import {
   faLocationDot,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 const Contact = () => {
+  const data = useSelector((state) => state.data.numbers);
+  console.log(data);
+
   return (
     <div className="container py-10 ">
       <div className="text-[3rem]">
