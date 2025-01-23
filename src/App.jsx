@@ -7,13 +7,17 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import AppRoutes from "./routes/AppRoutes";
+import { Provider } from "react-redux";
 // import ReactDOM from "react-dom/client";
+import store from "./redux/store";
 function App() {
   return (
     <>
       <Navbar />
       <div className="my-24"></div>
-      <AppRoutes />
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
       <Footer />
     </>
   );
