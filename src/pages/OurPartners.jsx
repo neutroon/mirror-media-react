@@ -1,59 +1,21 @@
 // import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import PageTitle from "../components/PageTitle/PageTitle";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPartners } from "../redux/dataSlice";
+import { fetchPartners } from "../redux/partnersSlice";
 const OurPartners = () => {
   const dispatch = useDispatch();
-  const { partners, status, error } = useSelector((state) => state.data);
+  const { partners, status, error } = useSelector((state) => state.partners);
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchPartners());
     }
   }, [status, dispatch]);
-  // const getPartners = async () => {
-  //   const res = await fetch(
-  //     "https://jjgoegozmvelpbpghdri.supabase.co/rest/v1/partners?select=category_id,name,logo,description,categories(name)",
 
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         apikey:
-  //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqZ29lZ296bXZlbHBicGdoZHJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczNjgyMDQsImV4cCI6MjA1Mjk0NDIwNH0.5IcSdFy13gInIB3NyL7S0O5TezDe_dW654fzVQlE03g",
-  //       },
-  //     }
-  //   );
-  //   const partners = await res.json();
-  //   return partners;
-  // };
-
-  // const [partnersData, setPartnersData] = useState([]);
-
-  // useEffect(() => {
-  //   // getPartners().then((partners) => {
-  //   //   const groubedPartners = partners.reduce((acc, partner) => {
-  //   //     if (!acc.find((cat) => cat.categoryName === partner.categories.name)) {
-  //   //       acc.push({
-  //   //         categoryName: partner.categories.name,
-  //   //         partners: [partner],
-  //   //       });
-  //   //     } else {
-  //   //       const cat = acc.find(
-  //   //         (cat) => cat.categoryName === partner.categories.name
-  //   //       );
-  //   //       cat.partners.push(partner);
-  //   //     }
-  //   //     return acc;
-  //   //   }, []);
-  //   //   console.log("groubedPartners", groubedPartners);
-
-  //   //   setPartnersData(groubedPartners);
-  //   });
-  // }, []);
   return (
     <>
       <div className="relative">
@@ -82,7 +44,7 @@ const OurPartners = () => {
                       className="partner flex items-center content-center overflow-hidden border-primary border-2 rounded-md relative"
                     >
                       <div className="absolute top-0 start-0 end-0 bottom-0 z-10 opacity-0 hover:opacity-100 transition-all duration-500 bg-primary-400">
-                        <NavLink to={`/partners/${partner.name}`}>
+                        <NavLink to={`/partners/${partner.id}`}>
                           <button className="absolute top-1/2 start-1/2 main-btn -translate-y-1/2 -translate-x-1/2">
                             Details
                           </button>
