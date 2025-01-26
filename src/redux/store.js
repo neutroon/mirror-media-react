@@ -1,17 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import partnersReducer from "./dataSlice";
-
-// const data = createSlice({
-//   name: "data",
-//   initialState: {
-//     numbers: dataReducer,
-//   },
-//   middleware: [thunk],
-// });
+import partnersReducer from "./partnersSlice";
 
 const store = configureStore({
   reducer: {
-    data: partnersReducer,
+    partners: partnersReducer,
   },
 });
 export default store;
