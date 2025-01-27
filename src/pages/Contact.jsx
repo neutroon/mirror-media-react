@@ -1,4 +1,5 @@
 // import React from "react";
+import emailjs from "@emailjs/browser";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -9,10 +10,39 @@ import {
   faLocationDot,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useRef, useState } from "react";
+
 const Contact = () => {
-  const data = useSelector((state) => state.data.numbers);
-  console.log(data);
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+
+  const formRef = useRef(null);
+
+  const handleFormSubmition = (values) => {
+    setIsLoading(true);
+    console.log(values);
+
+    emailjs
+      .sendForm(
+        "service_9a7d8je",
+        "template_m19x6fk",
+        formRef.current,
+        "Kvtcw9zsd04ypKlmF"
+      )
+      .then(() => {
+        setSuccessMessage("Your message has been sent successfully!");
+        formRef.current.reset();
+      })
+      .catch((err) => {
+        setErrorMessage(
+          "Failed to send your message. Please try again later. " + err
+        );
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div className="container py-10 ">
@@ -50,20 +80,23 @@ const Contact = () => {
         </div>
       </div>
       <Formik
-        initialValues={{ name: "", email: "", message: "", socialLinks: "" }}
+        initialValues={{
+          from_name: "",
+          from_email: "",
+          message: "",
+          socialLinks: "",
+        }}
         validationSchema={Yup.object({
-          name: Yup.string().required("Name is required"),
-          email: Yup.string()
+          from_name: Yup.string().required("Name is required"),
+          from_email: Yup.string()
             .required("Email is required")
             .email("Invalid email"),
           message: Yup.string().required("Message is required"),
-          socialLinks: Yup.string().required("Social links is required"),
+          socialLinks: Yup.string(),
         })}
-        onSubmit={(value) => {
-          console.log(value);
-        }}
+        onSubmit={handleFormSubmition}
       >
-        <Form>
+        <Form ref={formRef}>
           <div className="pb-4 pt-20 flex items-center gap-3 text-[2rem]">
             <FontAwesomeIcon className="text-primary" icon={faEnvelope} />
             <h2>Leave A Message</h2>
@@ -74,11 +107,11 @@ const Contact = () => {
             <div className="flex-grow">
               <div className="flex flex-col">
                 <label htmlFor="name" className="text-primary-800 font-bold">
-                  name:{" "}
+                  Name:{" "}
                 </label>
                 <Field
                   type="text"
-                  name="name"
+                  name="from_name"
                   id="name"
                   className="focus:border-b-2 focus:border-b-primary border border-gray-300  outline-none rounded-sm focus:rounded-lg transition-all duration-700 p-2"
                   placeholder="Enter your name"
@@ -94,11 +127,11 @@ const Contact = () => {
             <div className="flex-grow">
               <div className="flex flex-col">
                 <label htmlFor="email" className="text-primary-800 font-bold">
-                  email:{" "}
+                  Email:{" "}
                 </label>
                 <Field
                   type="text"
-                  name="email"
+                  name="from_email"
                   id="email"
                   className="focus:border-b-2 focus:border-b-primary border border-gray-300  outline-none rounded-sm focus:rounded-lg transition-all duration-700 p-2"
                   placeholder="Enter your email"
@@ -115,7 +148,7 @@ const Contact = () => {
           <div>
             <div className="flex flex-col">
               <label htmlFor="message" className="text-primary-800 font-bold">
-                message:{" "}
+                Message:{" "}
               </label>
               <Field
                 as="textarea"
@@ -139,7 +172,7 @@ const Contact = () => {
                 htmlFor="socialLinks"
                 className="text-primary-800 font-bold"
               >
-                social links:{" "}
+                Social Links:{" "}
                 <span className="text-gray-500 text-[.8rem]">optional</span>
               </label>
               <Field
@@ -153,10 +186,27 @@ const Contact = () => {
           </div>
 
           <div className="bg-primary mt-8 rounded-sm hover:rounded-[1.5rem]">
-            <button className="main-btn  w-full rounded-none" type="submit">
-              Submit
+            <button
+              disabled={isLoading}
+              className="main-btn  w-full rounded-none"
+              type="submit"
+            >
+              {isLoading ? (
+                <span className="loading loading-dots loading-md"></span>
+              ) : (
+                "Submit"
+              )}
             </button>
           </div>
+          {
+            <div
+              className={`mt-2 text-center text-[1.2rem] ${
+                successMessage ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {successMessage || errorMessage}
+            </div>
+          }
         </Form>
       </Formik>
     </div>

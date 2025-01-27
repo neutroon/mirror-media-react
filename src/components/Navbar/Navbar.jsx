@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 // import style from "./Navbar.module.css";
 import "../../App.css";
 import { NavLink, useLocation } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const Navbar = () => {
+const Navbar = ({ logo }) => {
   const location = useLocation();
   useEffect(() => {
     setIsClosed(true);
@@ -28,10 +31,11 @@ const Navbar = () => {
     >
       <div className="flex justify-between font-bold items-center">
         <div className="w-16 rounded-full overflow-hidden cursor-pointer">
-          <img
-            className="w-full scale-150"
-            src="/logo.jpg"
+          <LazyLoadImage
+            className="w-full scale-[1.65] pe-[2px]"
+            src={logo}
             alt="company logo"
+            effect="blur"
           />
         </div>
         <ul

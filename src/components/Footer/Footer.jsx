@@ -7,13 +7,13 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 
-const Footer = () => {
+const Footer = ({ logo }) => {
   return (
     <footer className="bg-gray-100  text-gray-500">
       <div className="container py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="mx-1.5 flex-1">
           <div className="rounded-full lg:mx-auto overflow-hidden w-20 h-20 mb-3">
-            <img src="/logo.jpg" alt="" className="scale-150" />
+            <img src={logo} alt="" className="scale-150" />
           </div>
           <div>
             <p>

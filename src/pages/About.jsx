@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import PageTitle from "../components/PageTitle/PageTitle";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAboutPageData } from "../redux/aboutSlice";
 const About = () => {
+  const dispatch = useDispatch();
+  const { about_page } = useSelector((state) => state.about);
+  useEffect(() => {
+    dispatch(fetchAboutPageData());
+  }, [dispatch]);
   return (
     <>
       <div className="h-screen -mt-24 sticky -z-10 top-0">
@@ -11,7 +19,7 @@ const About = () => {
         /> */}
         <LazyLoadImage
           className="h-screen object-cover w-screen "
-          src="/public/about images/about.jpg"
+          src={about_page[0]?.background}
           effect="blur"
         />
       </div>

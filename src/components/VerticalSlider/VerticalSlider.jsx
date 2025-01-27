@@ -1,28 +1,17 @@
-// import React, { useRef, useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
+
 import "swiper/css/pagination";
-import styel from "./VerticalSlider.module.css";
-
-// import "./styles.css";
-
-// import required modules
 import { Autoplay, Pagination } from "swiper/modules";
+import styel from "./VerticalSlider.module.css";
+import React from "react";
 
-const VerticalSlider = ({ slideContent }) => {
+const VerticalSlider = ({ children }) => {
   return (
     <>
       <Swiper
         height={450}
         autoHeight={true}
-        // loop={true}
-        // autoplay={{
-        //   delay: 2000,
-        //   disableOnInteraction: true,
-        // }}
         slidesPerView={1}
         direction={"vertical"}
         scrollbar={{ draggable: true }}
@@ -32,9 +21,9 @@ const VerticalSlider = ({ slideContent }) => {
         modules={[Pagination, Autoplay]}
         className={`${styel.verticalSlider}`}
       >
-        {slideContent.map((slide, index) => {
-          return <SwiperSlide key={index}>{slide}</SwiperSlide>;
-        })}
+        {React.Children.map(children, (child, index) => (
+          <SwiperSlide key={index}>{child}</SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

@@ -6,10 +6,12 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { NavLink } from "react-router-dom";
 
 const ServiceCard = ({
+  service = {
+    title: "Service Card",
+    description: "Service Card Description",
+    // image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
+  },
   inSlider = false,
-  title = "Service name",
-  description = "",
-  image = "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -34,25 +36,20 @@ const ServiceCard = ({
           /> */}
           <LazyLoadImage
             className="h-full rounded-none w-full object-cover absolute "
-            src={image}
+            src={service.logo}
             alt="service image"
             effect="blur"
           />
         </figure>
         <div className="card-body px-2 ">
-          <h2 className="card-title mx-auto font-bold">
-            {title.toUpperCase()}
-          </h2>
+          <h2 className="card-title mx-auto font-bold">{service.name}</h2>
           <p className="text-gray-500">
-            {description.length > 100
-              ? description.substring(0, 100) + "..."
-              : description}
+            {service.description.length > 100
+              ? service.description.substring(0, 100) + "..."
+              : service.description}
           </p>
           <div className={`card-actions `}>
-            <NavLink
-              to={`/services/${title.toLowerCase()}`}
-              className={"mx-auto"}
-            >
+            <NavLink to={`/services/${service.id}`} className={"mx-auto"}>
               <button className="btn main-btn tracking-widest font-bold">
                 Learn More!
               </button>

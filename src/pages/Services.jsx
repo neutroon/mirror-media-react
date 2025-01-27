@@ -1,83 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PageTitle from "../components/PageTitle/PageTitle";
 import ServiceCard from "../components/ServiceCard/ServiceCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchServices } from "../redux/servicesSlice";
 
 // import React from "react";
 
 const Services = () => {
-  const getServices = async () => {
-    const response = await fetch(
-      "https://jjgoegozmvelpbpghdri.supabase.co/rest/v1/services",
-      {
-        method: "get",
-        headers: {
-          apikey:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqZ29lZ296bXZlbHBicGdoZHJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczNjgyMDQsImV4cCI6MjA1Mjk0NDIwNH0.5IcSdFy13gInIB3NyL7S0O5TezDe_dW654fzVQlE03g",
-        },
-      }
-    );
-    const services = await response.json();
-    return services;
-  };
+  const dispatch = useDispatch();
+  const { services } = useSelector((state) => state.services);
 
-  const [services, setServices] = useState([]);
+  // const getServices = async () => {
+  //   const response = await fetch(
+  //     "https://jjgoegozmvelpbpghdri.supabase.co/rest/v1/services",
+  //     {
+  //       method: "get",
+  //       headers: {
+  //         apikey:
+  //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqZ29lZ296bXZlbHBicGdoZHJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczNjgyMDQsImV4cCI6MjA1Mjk0NDIwNH0.5IcSdFy13gInIB3NyL7S0O5TezDe_dW654fzVQlE03g",
+  //       },
+  //     }
+  //   );
+  //   const services = await response.json();
+  //   return services;
+  // };
+
   useEffect(() => {
-    getServices().then((data) => {
-      console.log(services);
-      setServices(data);
-    });
-  }, []);
+    dispatch(fetchServices());
+  }, [dispatch]);
 
-  // const Services = [
-  //   {
-  //     title: "Branding",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Social Media Management",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Branding",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Social Media Management",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Branding",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Social Media Management",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Branding",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  //   {
-  //     title: "Social Media Management",
-  //     description:
-  //       "We create visually appealing and memorable branding materials for businesses, organizations, and individuals.",
-  //     image: "/service images/SOCIAL MEDIA MANAGEMENT.jpg",
-  //   },
-  // ];
   return (
     <section className="py-10">
       <div className="text-[3rem]">
@@ -87,9 +38,10 @@ const Services = () => {
         {services.map((service, index) => (
           <ServiceCard
             key={index}
-            title={service.title}
-            description={service.description}
-            image={service.image}
+            service={service}
+            // title={service.name}
+            // description={service.description}
+            // image={service.logo}
           />
         ))}
       </div>

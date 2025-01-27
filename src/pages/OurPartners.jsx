@@ -6,15 +6,25 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPartners } from "../redux/partnersSlice";
+import { fetchPartners, fetchPublicData } from "../redux/partnersSlice";
 const OurPartners = () => {
   const dispatch = useDispatch();
   const { partners, status, error } = useSelector((state) => state.partners);
+  const { public_data } = useSelector((state) => state.public_data);
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchPartners());
-    }
-  }, [status, dispatch]);
+    // if (status === "idle") {
+    dispatch(fetchPartners());
+    dispatch(fetchPublicData());
+    // }
+  }, [dispatch]);
+
+  if (status === "loading") {
+    return <div className="text-center">Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
 
   return (
     <>
@@ -24,7 +34,7 @@ const OurPartners = () => {
         </div>
         {/* <img src="/ourParteners images/ourPartenr-header.png" alt="" /> */}
         <LazyLoadImage
-          src="/ourParteners images/ourPartenr-header.png"
+          src={public_data[0]?.partnersPage_bg}
           alt="partner image"
           effect="blur"
         />

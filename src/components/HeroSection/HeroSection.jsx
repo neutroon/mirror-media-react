@@ -1,33 +1,21 @@
-// import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-const HeroSection = () => {
-  const imgs = [
-    {
-      src: "/slider images/slide1.jpg",
-    },
-    {
-      src: "/slider images/slide2.jpg",
-    },
-  ];
 
+const HeroSection = ({ imgs }) => {
   return (
-    <>
-      <div className="carousel  rounded-b-box">
-        {imgs.map((img, index) => {
-          return (
-            <div className="carousel-item w-full" key={index}>
-              <LazyLoadImage
-                className="object-cover w-screen h-screen"
-                src={img.src}
-                effect="blur"
-              />
-              {/* <img className="object-cover w-full" src={img.src} /> */}
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <div className="carousel rounded-b-box">
+      {imgs?.header_slider?.map((img, index) => (
+        <div className="carousel-item w-full" key={index}>
+          {/* <img src={img} className="object-cover w-screen h-screen" /> */}
+          <LazyLoadImage
+            className="object-cover w-screen h-screen"
+            src={img}
+            effect="blur"
+            alt={`Slide ${index + 1}`}
+          />
+        </div>
+      ))}
+    </div>
   );
 };
 
